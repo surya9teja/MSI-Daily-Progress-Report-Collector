@@ -30,7 +30,7 @@ public class data_post extends AppCompatActivity {
     Spinner spinner;
     Button submit;
     DatePickerDialog datePickerDialog;
-    EditText site_engineer, channel_partner, line_name, line_length, route_length, drum_number, location_number, today_work, plan_tomorrow, ehs, remarks;
+    EditText site_engineer, channel_partner, line_name, line_length, route_length, drum_number, location_number, today_work, plan_tomorrow, ehs, remarks,total_completed,drum_length;
     String managers[] = new String[]{"Rajendra A", "Rajendra A", "Venkateswara", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Devendra", "Shyama", "Venkateswara", "Rajendra A"};
     String project[] = new String[]{"AP- 1132 & 636km", "AP- 242km", "BSPTCL", "GETCO- 2226", "GETCO- 2274 P1", "GETCO- 2274 P2", "GETCO- 2275", "GETCO- 2276", "GETCO- 2278", "PGCIL-1851km", "PGCIL-721km", "PTCUL", "TS-216km"};
 
@@ -59,6 +59,8 @@ public class data_post extends AppCompatActivity {
         ehs = (EditText) findViewById(R.id.in_ehs);
         remarks = (EditText) findViewById(R.id.in_remarks);
         submit = (Button) findViewById(R.id.btn_submit);
+        total_completed=(EditText)findViewById(R.id.in_total_completed);
+        drum_length=(EditText)findViewById(R.id.in_drum_length);
         txtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +138,9 @@ public class data_post extends AppCompatActivity {
                 String Line_Name = line_name.getText().toString().trim();
                 String Line_Length = line_length.getText().toString().trim();
                 String Route_Length = route_length.getText().toString().trim();
+                String Total_Completed=total_completed.getText().toString().trim();
                 String Drum_Number = drum_number.getText().toString().trim();
+                String Drum_Length=drum_length.getText().toString().trim();
                 String Location_Number = location_number.getText().toString().trim();
                 String PTW_Issue_Time = txtIssueTime.getText().toString().trim();
                 String PTW_Return_Time = txtReturnTime.getText().toString().trim();
@@ -147,12 +151,12 @@ public class data_post extends AppCompatActivity {
                 if (!(Date.isEmpty()) && !(Project_Manager.isEmpty()) && !(Site_Engineer.isEmpty()) && !(Channel_partner.isEmpty()) && !(Line_Name.isEmpty()) && !(Line_Length.isEmpty()) && !(Route_Length.isEmpty()) && !(Drum_Number.isEmpty()) && !(Location_Number.isEmpty()) && !(PTW_Issue_Time.isEmpty()) && !(PTW_Return_Time.isEmpty()) && !(Work_Today.isEmpty()) && !(Plan_Tomorrow.isEmpty()) && !(EHS.isEmpty()) && !(Remarks.isEmpty()))
                 {
                     Call<Void> completeQuestionnaireCall = post.completeQuestionnaire(Project_Name, Date, Project_Manager, Site_Engineer, Channel_partner
-                            , Line_Name, Line_Length, Route_Length, Drum_Number, Location_Number, PTW_Issue_Time, PTW_Return_Time, Work_Today, Plan_Tomorrow, EHS, Remarks);
+                            , Line_Name, Line_Length, Route_Length,Total_Completed, Drum_Number, Drum_Length,Location_Number, PTW_Issue_Time, PTW_Return_Time, Work_Today, Plan_Tomorrow, EHS, Remarks);
                     completeQuestionnaireCall.enqueue(callCallback);
                 }
                 else
                 {
-                    Toast.makeText(data_post.this,"Plese enter the all fields",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(data_post.this,"Please enter the all fields",Toast.LENGTH_SHORT).show();
                 }
             }
         });
