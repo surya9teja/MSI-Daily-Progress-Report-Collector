@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "591712437117",
+    "firebase_url": "https://dpr-project-85f89.firebaseio.com",
+    "project_id": "dpr-project-85f89",
+    "storage_bucket": "dpr-project-85f89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591712437117:android:1bde24a1198d88ed",
+        "android_client_info": {
+          "package_name": "com.example.dpr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591712437117-t05dfbqsa7egljaea29h76dtf7d4p5ol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzIhL_0VvlFymnglbtHyk3CMDm00pWZyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591712437117-t05dfbqsa7egljaea29h76dtf7d4p5ol.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591712437117:android:ebfb43b5c52d2da4",
+        "android_client_info": {
+          "package_name": "com.example.msi_dpr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591712437117-t05dfbqsa7egljaea29h76dtf7d4p5ol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzIhL_0VvlFymnglbtHyk3CMDm00pWZyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591712437117-t05dfbqsa7egljaea29h76dtf7d4p5ol.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
