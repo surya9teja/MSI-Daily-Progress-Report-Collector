@@ -3,8 +3,8 @@ package com.example.msi_dpr;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,8 +17,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.Calendar;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,11 +27,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class data_post extends AppCompatActivity {
+
+    DatabaseReference databaseReference;
     TextView txtDate, txtIssueTime, txtReturnTime, project_manager;
     Spinner spinner;
+    double latitude,longitude;
     Button submit;
     DatePickerDialog datePickerDialog;
-    EditText site_engineer, channel_partner, line_name, line_length, route_length, drum_number, location_number, today_work, plan_tomorrow, ehs, remarks,total_completed,drum_length;
+    EditText site_engineer, channel_partner, line_name, line_length, route_length, drum_number, location_number, today_work, plan_tomorrow, ehs, remarks, total_completed, drum_length;
     String managers[] = new String[]{"Rajendra A", "Rajendra A", "Venkateswara", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Devendra", "Shyama", "Venkateswara", "Rajendra A"};
     String project[] = new String[]{"AP- 1132 & 636km", "AP- 242km", "BSPTCL", "GETCO- 2226", "GETCO- 2274 P1", "GETCO- 2274 P2", "GETCO- 2275", "GETCO- 2276", "GETCO- 2278", "PGCIL-1851km", "PGCIL-721km", "PTCUL", "TS-216km"};
 
@@ -38,11 +42,10 @@ public class data_post extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_post);
-        Retrofit retrofit=new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://docs.google.com/forms/d/")
                 .build();
-        final postdata post=retrofit.create(postdata.class);
-        spinner = (Spinner) findViewById(R.id.project_list);
+        final postdata post = retrofit.create(postdata.class);
         txtDate = (TextView) findViewById(R.id.in_date);
         txtIssueTime = (TextView) findViewById(R.id.in_ptw_issue_time);
         txtReturnTime = (TextView) findViewById(R.id.in_ptw_return_time);
@@ -59,8 +62,9 @@ public class data_post extends AppCompatActivity {
         ehs = (EditText) findViewById(R.id.in_ehs);
         remarks = (EditText) findViewById(R.id.in_remarks);
         submit = (Button) findViewById(R.id.btn_submit);
-        total_completed=(EditText)findViewById(R.id.in_total_completed);
-        drum_length=(EditText)findViewById(R.id.in_drum_length);
+        total_completed = (EditText) findViewById(R.id.in_total_completed);
+        drum_length = (EditText) findViewById(R.id.in_drum_length);
+        spinner = (Spinner) findViewById(R.id.project_list);
         txtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,10 +152,11 @@ public class data_post extends AppCompatActivity {
                 String Plan_Tomorrow = plan_tomorrow.getText().toString().trim();
                 String EHS = ehs.getText().toString().trim();
                 String Remarks = remarks.getText().toString().trim();
+                String map_link="https://www.google.com/maps/search/?api=1&query="+longitude+","+latitude;
                 if (!(Date.isEmpty()) && !(Project_Manager.isEmpty()) && !(Site_Engineer.isEmpty()) && !(Channel_partner.isEmpty()) && !(Line_Name.isEmpty()) && !(Line_Length.isEmpty()) && !(Route_Length.isEmpty()) && !(Drum_Number.isEmpty()) && !(Location_Number.isEmpty()) && !(PTW_Issue_Time.isEmpty()) && !(PTW_Return_Time.isEmpty()) && !(Work_Today.isEmpty()) && !(Plan_Tomorrow.isEmpty()) && !(EHS.isEmpty()) && !(Remarks.isEmpty()))
                 {
                     Call<Void> completeQuestionnaireCall = post.completeQuestionnaire(Project_Name, Date, Project_Manager, Site_Engineer, Channel_partner
-                            , Line_Name, Line_Length, Route_Length,Total_Completed, Drum_Number, Drum_Length,Location_Number, PTW_Issue_Time, PTW_Return_Time, Work_Today, Plan_Tomorrow, EHS, Remarks);
+                            , Line_Name, Line_Length, Route_Length,Total_Completed, Drum_Number, Drum_Length,Location_Number, PTW_Issue_Time, PTW_Return_Time, Work_Today, Plan_Tomorrow, EHS, Remarks,map_link);
                     completeQuestionnaireCall.enqueue(callCallback);
                 }
                 else

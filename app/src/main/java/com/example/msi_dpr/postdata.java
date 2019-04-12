@@ -26,7 +26,8 @@ public interface postdata {
             @Field("entry.876830043") String today_work,
             @Field("entry.1125865297") String tomorrow_plan,
             @Field("entry.298094379") String ehs,
-            @Field("entry.1696127700") String remarks
+            @Field("entry.1696127700") String remarks,
+            @Field("entry.1223516338")String map_link
 
     );
 
