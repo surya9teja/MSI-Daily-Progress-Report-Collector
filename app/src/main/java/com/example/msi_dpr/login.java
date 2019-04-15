@@ -1,5 +1,6 @@
 package com.example.msi_dpr;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class login extends AppCompatActivity {
+    ProgressDialog dialog;
     Button login,signup;
     EditText email,password;
     FirebaseAuth firebaseAuth;
@@ -30,6 +32,8 @@ public class login extends AppCompatActivity {
         signup=(Button)findViewById(R.id.signup);
         email=(EditText)findViewById(R.id.in_email);
         password=(EditText)findViewById(R.id.in_password);
+        dialog=new ProgressDialog(login.this);
+        dialog.setMessage("Logging in");
         authStateListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -59,17 +63,21 @@ public class login extends AppCompatActivity {
                 }
                 else if(!(Email.isEmpty()) && !(Password.isEmpty()))
                 {
+                    dialog.show();
                     firebaseAuth.signInWithEmailAndPassword(Email,Password).addOnCompleteListener(login.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(!(task.isSuccessful()))
                             {
+                                dialog.dismiss();
                                 Toast.makeText(login.this,"Login Failed",Toast.LENGTH_SHORT).show();
                             }
                             else {
                                 Toast.makeText(login.this,"Login Success",Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
                                 Intent intent=new Intent(login.this,data_post.class);
                                 startActivity(intent);
+                                login.this.finish();
                             }
                         }
                     });
@@ -85,7 +93,6 @@ public class login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(login.this,signup.class);
                 startActivity(intent);
-                login.this.finish();
             }
         });
 
