@@ -8,11 +8,12 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="MSI-OPGW"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".submit"></activity>
+        <activity android:name=".Forget_password"></activity>
+        <activity android:name=".submit" />
         <activity android:name=".data_post" />
         <activity android:name=".signup" />
         <activity android:name=".login" />

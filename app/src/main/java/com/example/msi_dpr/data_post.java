@@ -29,6 +29,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -106,6 +108,10 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         spinner = (Spinner) findViewById(R.id.project_list);
         locationTv=(TextView) findViewById(R.id.locationTv);
         dialog=new ProgressDialog(data_post.this);
+        new AppUpdater(this)
+                .setUpdateFrom(UpdateFrom.GITHUB)
+                .setGitHubUserAndRepo("surya9teja", "MSI_DPR")
+                .start();
         dialog.setMessage("Submitting...please wait");
         ActivityCompat.requestPermissions(data_post.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},123);
         geocoder=new Geocoder(this, Locale.getDefault());
@@ -425,9 +431,8 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                         googleApiClient.connect();
                     }
                 }
-
                 break;
         }
     }
 
-    }
+}

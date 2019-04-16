@@ -16,7 +16,7 @@
             android:layout_height="70dp"
             android:orientation="horizontal">
             <ImageView
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="50dp"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/sterlite_logo" />
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="MSI-DPR"
+                android:text="OPGW-DPR"
                 android:gravity="center"
                 android:textColor="#000000"
                 android:textSize="40dp"/>
@@ -422,7 +422,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="current address"
+                android:text="Current address"
                 android:textSize="25dp"
                 android:textColor="#0C0C0C"
                 android:layout_marginTop="5dp"
@@ -446,66 +446,72 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/today_work"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
                 android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
                 android:text="Work Done Today"
                 android:textColor="#000000"
                 android:textSize="25dp" />
+
             <EditText
                 android:id="@+id/in_today_work"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="3"
+                android:background="@drawable/border"
                 android:text=" "
-                android:textSize="18dp"
-                android:background="@drawable/border" />
+                android:textAlignment="viewStart"
+                android:textSize="18dp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/plan_tomorrow"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1.5"
+                android:layout_height="0dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:text="Plans for Tomorrow"
                 android:textColor="#000000"
                 android:textSize="25dp" />
+
             <EditText
                 android:id="@+id/in_plan_tomorrow"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="3"
+                android:background="@drawable/border"
                 android:text=" "
-                android:textSize="18dp"
-                android:background="@drawable/border"/>
+                android:textAlignment="viewStart"
+                android:textSize="18dp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/ehs"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1.5"
+                android:layout_height="0dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
@@ -514,25 +520,27 @@
                 android:textSize="25dp" />
             <EditText
                 android:id="@+id/in_ehs"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="3"
+                android:layout_height="0dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:text=" "
                 android:textSize="18dp"
+                android:textAlignment="viewStart"
                 android:background="@drawable/border" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/remarks"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1.5"
+                android:layout_height="0dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
@@ -541,29 +549,32 @@
                 android:textSize="25dp" />
             <EditText
                 android:id="@+id/in_remarks"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="3"
+                android:layout_height="0dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:text=" "
                 android:textSize="18dp"
+                android:textAlignment="viewStart"
                 android:background="@drawable/border"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_submit"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Submit"
-                android:textColor="#000000"
+                android:textColor="#FFFF"
+                android:background="@drawable/signin_button"
                 android:layout_gravity="center_horizontal"
                 android:textSize="25dp" />
         </LinearLayout>

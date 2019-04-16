@@ -2,14 +2,16 @@ package com.example.msi_dpr;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -18,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class login extends AppCompatActivity {
     ProgressDialog dialog;
-    Button login,signup;
+    Button login,signup,forget;
     EditText email,password;
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -29,11 +31,16 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         firebaseAuth =FirebaseAuth.getInstance();
         login=(Button) findViewById(R.id.login);
+        forget=(Button)findViewById(R.id.forget);
         signup=(Button)findViewById(R.id.signup);
         email=(EditText)findViewById(R.id.in_email);
         password=(EditText)findViewById(R.id.in_password);
         dialog=new ProgressDialog(login.this);
         dialog.setMessage("Logging in");
+        new AppUpdater(this)
+                .setUpdateFrom(UpdateFrom.GITHUB)
+                .setGitHubUserAndRepo("surya9teja", "MSI_DPR")
+                .start();
         authStateListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -93,6 +100,14 @@ public class login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(login.this,signup.class);
                 startActivity(intent);
+            }
+        });
+        forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(login.this,Forget_password.class);
+                startActivity(intent);
+                login.this.finish();
             }
         });
 
