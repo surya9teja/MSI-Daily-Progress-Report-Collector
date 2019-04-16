@@ -1,9 +1,9 @@
 {
   "latestVersion": "1.2.2",
   "latestVersionCode": 10,
-  "url": "https://github.com/surya9teja/MSI_DPR/releases/download/v1.0/MSI-DPR.apk",
+  "url": "https://github.com/javiersantos/AppUpdater/releases",
   "releaseNotes": [
-    "- update checker",
+    "- First evolution",
     "- Second evolution",
     "- Bug fixes"
   ]
