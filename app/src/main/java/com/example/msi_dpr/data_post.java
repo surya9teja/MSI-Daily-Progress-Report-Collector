@@ -40,6 +40,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -155,7 +156,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                             }
                             if(d.after(now)){
                                 txtDate.setTextColor(Color.RED);
-                                txtDate.setError("enter valid date");
+                                txtDate.setError("Please Choose valid date");
                                 submit.setEnabled(false);
                             }
                             else{
@@ -180,9 +181,12 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                 mtimepicker = new TimePickerDialog(data_post.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        txtIssueTime.setText(hourOfDay + ":" + minute);
+                        Time time = new Time(hourOfDay, minute, 0);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm aa");
+                        String s = simpleDateFormat.format(time);
+                        txtIssueTime.setText(s);
                     }
-                }, hour, minute, true);
+                }, hour, minute, false);
                 mtimepicker.setTitle("Select Time");
                 mtimepicker.show();
             }
@@ -197,11 +201,30 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                 timePickerDialog = new TimePickerDialog(data_post.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                        txtReturnTime.setText(hourOfDay + ":" + minute);
+                        Time time = new Time(hourOfDay, minute, 0);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm aa");
+                        String s = simpleDateFormat.format(time);
+                        txtReturnTime.setText(s);
+                        try {
+                            Date issue_t=simpleDateFormat.parse(txtIssueTime.getText().toString());
+                            Date return_t=simpleDateFormat.parse(txtReturnTime.getText().toString());
+                            if(issue_t.compareTo(return_t)>0){
+                                txtReturnTime.setError("Please choose valid time");
+                                Toast.makeText(data_post.this,"Return Time should be greater than issue time",Toast.LENGTH_SHORT).show();
+                                txtReturnTime.setTextColor(Color.RED);
+                            }
+                            else {
+                                txtReturnTime.setError(null);
+                                txtReturnTime.setTextColor(Color.BLACK);
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }, hour, minute, true);
+                }, hour, minute, false);
                 timePickerDialog.setTitle("Select Time");
                 timePickerDialog.show();
+
             }
         });
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, project);
