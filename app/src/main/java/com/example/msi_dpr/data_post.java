@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -39,8 +40,11 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -138,9 +142,32 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         txtDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        String user_date=(String)txtDate.getText().toString();
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        Date d=null;
+                        Date now=new Date();
+                        if(user_date!=null){
+                            try {
+                                d=simpleDateFormat.parse(user_date);
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if(d.after(now)){
+                                txtDate.setTextColor(Color.RED);
+                                txtDate.setError("enter valid date");
+                                submit.setEnabled(false);
+                            }
+                            else{
+                                txtDate.setTextColor(Color.BLACK);
+                                txtDate.setError(null);
+                                submit.setEnabled(true);
+                            }
+                        }
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
+
             }
         });
         txtIssueTime.setOnClickListener(new View.OnClickListener() {
@@ -215,16 +242,33 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                 String EHS = ehs.getText().toString().trim();
                 String Remarks = remarks.getText().toString().trim();
                 String l=locationTv.getText().toString();
-                if (!(l.isEmpty()) && !(Date.isEmpty()) && !(Project_Manager.isEmpty()) && !(Site_Engineer.isEmpty()) && !(Channel_partner.isEmpty()) && !(Line_Name.isEmpty()) && !(Line_Length.isEmpty()) && !(Route_Length.isEmpty()) && !(Drum_Number.isEmpty()) && !(Location_Number.isEmpty()) && !(PTW_Issue_Time.isEmpty()) && !(PTW_Return_Time.isEmpty()) && !(Work_Today.isEmpty()) && !(Plan_Tomorrow.isEmpty()) && !(EHS.isEmpty()) && !(Remarks.isEmpty()))
-                {
-                    Call<Void> completeQuestionnaireCall = post.completeQuestionnaire(Project_Name, Date, Project_Manager, Site_Engineer, Channel_partner
-                            , Line_Name, Line_Length, Route_Length,Total_Completed, Drum_Number, Drum_Length,Location_Number, PTW_Issue_Time, PTW_Return_Time, Work_Today, Plan_Tomorrow, EHS, Remarks,l);
-                    completeQuestionnaireCall.enqueue(callCallback);
-                    dialog.show();
-
+                if (!(l.isEmpty()) && !(Date.isEmpty()) && !(Project_Manager.isEmpty()) && !(Site_Engineer.isEmpty()) && !(Channel_partner.isEmpty()) && !(Line_Name.isEmpty()) && !(Line_Length.isEmpty()) && !(Route_Length.isEmpty()) && !(Drum_Number.isEmpty()) && !(Location_Number.isEmpty()) && !(PTW_Issue_Time.isEmpty()) && !(PTW_Return_Time.isEmpty()) && !(Work_Today.isEmpty()) && !(Plan_Tomorrow.isEmpty()) && !(EHS.isEmpty()) && !(Remarks.isEmpty())) {
+                    float line_len = Float.parseFloat(Line_Length);
+                    float route_len = Float.parseFloat(Route_Length);
+                    float total_com = Float.parseFloat(Total_Completed);
+                    if (route_len > line_len) {
+                        Toast.makeText(data_post.this, "Route Length Should not more than Line Length", Toast.LENGTH_SHORT).show();
+                        //route_length.setTextColor(Color.RED);
+                        route_length.setError("please enter valid value");
+                    } else if (total_com > line_len) {
+                        Toast.makeText(data_post.this, "Total Completed Should not more than Line Length", Toast.LENGTH_SHORT).show();
+                        //total_completed.setTextColor(Color.RED);
+                        total_completed.setError("please enter valid value");
+                    }
+                    else
+                        {
+                            Call<Void> completeQuestionnaireCall = post.completeQuestionnaire(Project_Name, Date, Project_Manager, Site_Engineer, Channel_partner
+                                    , Line_Name, Line_Length, Route_Length, Total_Completed, Drum_Number, Drum_Length, Location_Number, PTW_Issue_Time, PTW_Return_Time, Work_Today, Plan_Tomorrow, EHS, Remarks, l);
+                            completeQuestionnaireCall.enqueue(callCallback);
+                            dialog.show();
+                            route_length.setError(null);
+                            //route_length.setTextColor(Color.BLACK);
+                            total_completed.setError(null);
+                            //total_completed.setTextColor(Color.BLACK);
+                    }
                 }
                 else if(l.isEmpty()){
-                    Toast.makeText(data_post.this,"Please Enable the GPS and wait for 15 seconds",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(data_post.this,"Please Enable the GPS and wait for current address",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
