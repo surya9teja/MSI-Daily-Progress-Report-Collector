@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Forget_password"></activity>
+        <activity android:name=".OneFragment"></activity>
+        <activity android:name=".data_retrieval" />
+        <activity android:name=".Forget_password" />
         <activity android:name=".submit" />
         <activity android:name=".data_post" />
         <activity android:name=".signup" />

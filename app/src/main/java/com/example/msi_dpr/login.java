@@ -35,6 +35,8 @@ public class login extends AppCompatActivity {
         signup=(Button)findViewById(R.id.signup);
         email=(EditText)findViewById(R.id.in_email);
         password=(EditText)findViewById(R.id.in_password);
+        Intent intent=new Intent(login.this,data_retrieval.class);
+        startActivity(intent);
         dialog=new ProgressDialog(login.this);
         dialog.setMessage("Logging in");
         new AppUpdater(this)

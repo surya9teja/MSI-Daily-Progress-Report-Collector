@@ -233,7 +233,6 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItemText = (String) parent.getItemAtPosition(position);
                 // Notify the selected item text
                 project_manager.setText(managers[position]);
             }
