@@ -12,4 +12,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <string name="title_activity_pgcil721">pgcil721</string>
 </resources>

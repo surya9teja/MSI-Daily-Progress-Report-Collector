@@ -36,6 +36,7 @@
                     android:orientation="vertical"
                     android:layout_height="match_parent">
                     <Button
+                        android:id="@+id/ap1132"
                         android:layout_marginTop="20dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
@@ -48,11 +49,12 @@
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
 
-                    <ImageView
+                    <Button
+                        android:id="@+id/bsptcl"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/bsptcl"/>
+                        android:background="@drawable/bsptcl"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -60,11 +62,12 @@
                         android:text="BSPTCL"
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
-                    <ImageView
+                    <Button
+                        android:id="@+id/getco2274p1"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/getco2274"/>
+                        android:background="@drawable/getco2274"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -72,11 +75,12 @@
                         android:text="GETCO-2274P1"
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
-                    <ImageView
+                    <Button
+                        android:id="@+id/getco2275"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/getco2275"/>
+                        android:background="@drawable/getco2275"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -84,11 +88,12 @@
                         android:text="GETCO-2275"
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
-                    <ImageView
+                    <Button
+                        android:id="@+id/getco2278"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/getco2278"/>
+                        android:background="@drawable/getco2278"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -96,11 +101,12 @@
                         android:text="GETCO-2278"
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
-                    <ImageView
+                    <Button
+                        android:id="@+id/pgcil1721"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/pgcil1721"/>
+                        android:background="@drawable/pgcil1721"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -108,11 +114,12 @@
                         android:text="PGCIL-1721"
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
-                    <ImageView
+                    <Button
+                        android:id="@+id/ts216"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/ts216"/>
+                        android:background="@drawable/ts216"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -127,11 +134,12 @@
                     android:orientation="vertical"
                     android:gravity="center_horizontal"
                     android:layout_height="match_parent">
-                    <ImageView
+                    <Button
+                        android:id="@+id/ap242"
                         android:layout_marginTop="20dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/ap242"/>
+                        android:background="@drawable/ap242"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -139,11 +147,12 @@
                         android:text="AP-242"
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
-                    <ImageView
+                    <Button
+                        android:id="@+id/getco2226"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/getco226"/>
+                        android:background="@drawable/getco226"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -151,11 +160,12 @@
                         android:text="GETCO-2226"
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
-                    <ImageView
+                    <Button
+                        android:id="@+id/getco2274p2"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/getco2274p2"/>
+                        android:background="@drawable/getco2274p2"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -163,11 +173,12 @@
                         android:text="GETCO-2274 P2"
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
-                    <ImageView
+                    <Button
+                        android:id="@+id/getco2276"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/getco2276"/>
+                        android:background="@drawable/getco2276"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -175,11 +186,12 @@
                         android:text="GETCO-2276"
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
-                    <ImageView
+                    <Button
+                        android:id="@+id/pgcil1851"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/pgcil1851"/>
+                        android:background="@drawable/pgcil1851"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
@@ -187,11 +199,12 @@
                         android:text="PGCIL-1851"
                         android:textColor="#FFFFFF"
                         android:textSize="25dp"/>
-                    <ImageView
+                    <Button
+                        android:id="@+id/ptcul"
                         android:layout_marginTop="30dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
-                        android:src="@drawable/ptcul"/>
+                        android:background="@drawable/ptcul"/>
                     <TextView
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
