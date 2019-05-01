@@ -28,21 +28,16 @@ public class login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R
+                .layout.activity_login);
         firebaseAuth =FirebaseAuth.getInstance();
         login=(Button) findViewById(R.id.login);
         forget=(Button)findViewById(R.id.forget);
         signup=(Button)findViewById(R.id.signup);
         email=(EditText)findViewById(R.id.in_email);
         password=(EditText)findViewById(R.id.in_password);
-        Intent intent=new Intent(login.this,data_retrieval.class);
-        startActivity(intent);
         dialog=new ProgressDialog(login.this);
         dialog.setMessage("Logging in");
-        new AppUpdater(this)
-                .setUpdateFrom(UpdateFrom.GITHUB)
-                .setGitHubUserAndRepo("surya9teja", "MSI_DPR")
-                .start();
         authStateListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {

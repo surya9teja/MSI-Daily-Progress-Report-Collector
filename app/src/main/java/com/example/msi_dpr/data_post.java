@@ -113,10 +113,6 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         spinner = (Spinner) findViewById(R.id.project_list);
         locationTv=(TextView) findViewById(R.id.locationTv);
         dialog=new ProgressDialog(data_post.this);
-        new AppUpdater(this)
-                .setUpdateFrom(UpdateFrom.GITHUB)
-                .setGitHubUserAndRepo("surya9teja", "MSI_DPR")
-                .start();
         dialog.setMessage("Submitting...please wait");
         ActivityCompat.requestPermissions(data_post.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},123);
         geocoder=new Geocoder(this, Locale.getDefault());
@@ -126,7 +122,6 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                         new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
             }
         }
-
         // we build google api client
         googleApiClient = new GoogleApiClient.Builder(this).
                 addApi(LocationServices.API).
@@ -321,7 +316,8 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
     protected void onStart() {
         super.onStart();
 
-        if (googleApiClient != null) {
+        if (googleApiClient != null)
+        {
             googleApiClient.connect();
         }
     }
@@ -330,7 +326,8 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
     protected void onResume() {
         super.onResume();
 
-        if (!checkPlayServices()) {
+        if (!checkPlayServices())
+        {
             locationTv.setText("You need to install Google Play Services to use the App properly");
         }
     }
