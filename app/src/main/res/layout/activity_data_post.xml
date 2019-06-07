@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFF"
     tools:context=".data_post">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FFFF"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -570,13 +568,22 @@
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:text="Submit"
                 android:textColor="#FFFF"
                 android:background="@drawable/signin_button"
                 android:layout_gravity="center_horizontal"
                 android:textSize="25dp" />
+            <Button
+                android:id="@+id/btn_signout"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="sign out"
+                android:textColor="#FFFF"
+                android:background="@drawable/signin_button"
+                android:layout_gravity="center_horizontal"
+                android:textSize="25dp"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

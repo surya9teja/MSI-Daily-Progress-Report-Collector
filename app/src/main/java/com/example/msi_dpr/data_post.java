@@ -38,6 +38,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -63,6 +64,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private LocationRequest locationRequest;
     List<Address> addresses;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
     private static final long UPDATE_INTERVAL = 5000, FASTEST_INTERVAL = 5000; // = 5 seconds
     // lists for permissions
     private ArrayList<String> permissionsToRequest;
@@ -74,7 +76,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
     ProgressDialog dialog;
     TextView txtDate, txtIssueTime, txtReturnTime, project_manager,locationTv;
     Spinner spinner;
-    Button submit;
+    Button submit,signout;
     Geocoder geocoder;
     DatePickerDialog datePickerDialog;
     EditText site_engineer, channel_partner, line_name, line_length, route_length, drum_number, location_number, today_work, plan_tomorrow, ehs, remarks, total_completed, drum_length;
@@ -112,6 +114,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         drum_length = (EditText) findViewById(R.id.in_drum_length);
         spinner = (Spinner) findViewById(R.id.project_list);
         locationTv=(TextView) findViewById(R.id.locationTv);
+        signout=(Button) findViewById(R.id.btn_signout);
         dialog=new ProgressDialog(data_post.this);
         dialog.setMessage("Submitting...please wait");
         ActivityCompat.requestPermissions(data_post.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},123);
@@ -235,6 +238,15 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent i=new Intent(data_post.this,login.class);
+                startActivity(i);
+                data_post.this.finish();
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
