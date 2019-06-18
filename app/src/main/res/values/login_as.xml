@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="login_as">
+        <item>Daily report entry</item>
+        <item>Data analysis report</item>
+    </string-array>
+</resources>
