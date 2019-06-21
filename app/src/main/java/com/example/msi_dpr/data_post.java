@@ -310,7 +310,8 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         ArrayList<String> result = new ArrayList<>();
 
         for (String perm : wantedPermissions) {
-            if (!hasPermission(perm)) {
+            if (!hasPermission(perm))
+            {
                 result.add(perm);
             }
         }

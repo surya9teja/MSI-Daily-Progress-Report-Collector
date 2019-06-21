@@ -4,8 +4,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,20 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ptcul"></activity>
-        <activity android:name=".pgcil1851" />
-        <activity android:name=".getco2276" />
-        <activity android:name=".ts216" />
-        <activity android:name=".pgcil1721" />
-        <activity android:name=".getco2228" />
-        <activity android:name=".getco2225" />
-        <activity android:name=".getco2274p2" />
-        <activity android:name=".getco2274p1" />
-        <activity android:name=".getco2226" />
-        <activity android:name=".bsptcl" />
-        <activity android:name=".ap242" />
-        <activity android:name=".ap1132" />
-        <activity android:name=".data_retrieval" />
+        <activity android:name=".data_retrive"></activity>
         <activity android:name=".Forget_password" />
         <activity android:name=".submit" />
         <activity android:name=".data_post" />
