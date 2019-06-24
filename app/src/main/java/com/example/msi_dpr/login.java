@@ -113,7 +113,7 @@ public class login extends AppCompatActivity {
                                                 {
                                                     Toast.makeText(login.this, "Login Success", Toast.LENGTH_SHORT).show();
                                                     dialog.dismiss();
-                                                    Intent intent = new Intent(login.this, data_retrive.class);
+                                                    Intent intent = new Intent(login.this, project_board.class);
                                                     startActivity(intent);
                                                     login.this.finish();
                                                 }
