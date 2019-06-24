@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".data_retrive"></activity>
+        <activity android:name=".project_board"></activity>
+        <activity android:name=".project_1" />
+        <activity android:name=".data_retrive" />
         <activity android:name=".Forget_password" />
         <activity android:name=".submit" />
         <activity android:name=".data_post" />

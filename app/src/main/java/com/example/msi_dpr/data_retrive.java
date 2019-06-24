@@ -14,9 +14,13 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -49,9 +53,6 @@ public class data_retrive extends AppCompatActivity implements EasyPermissions.P
     private TextView mOutputText;
     private Button mCallApiButton;
     ProgressDialog mProgress;
-    ViewPager simpleViewPager;
-    TabLayout tabLayout;
-    String projects[]={ "AP- 1132 & 636km","AP- 242km","BSPTCL","GETCO- 2226","GETCO- 2274 P1","GETCO- 2274 P2","GETCO- 2275","GETCO- 2276","GETCO- 2278","PGCIL-1851km","PGCIL-721km","PTCUL","TS-216km"};
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -66,55 +67,8 @@ public class data_retrive extends AppCompatActivity implements EasyPermissions.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_retrive);
-        tabLayout=(TabLayout)findViewById(R.id.tab_layout);
-        simpleViewPager=(ViewPager)findViewById(R.id.viewpager);
-
-        //mCallApiButton = (Button) findViewById(R.id.api_button);
-        //mOutputText = (TextView) findViewById(R.id.text_output);
-        TabLayout.Tab firsttab=tabLayout.newTab();
-        firsttab.setText(projects[0]);
-        tabLayout.addTab(firsttab);
-        TabLayout.Tab secondtab=tabLayout.newTab();
-        secondtab.setText(projects[1]);
-        tabLayout.addTab(secondtab);
-        TabLayout.Tab thirdtab=tabLayout.newTab();
-        thirdtab.setText(projects[2]);
-        tabLayout.addTab(thirdtab);
-        TabLayout.Tab fourthtab=tabLayout.newTab();
-        fourthtab.setText(projects[3]);
-        tabLayout.addTab(fourthtab);
-        TabLayout.Tab fiveTab=tabLayout.newTab();
-        fiveTab.setText(projects[4]);
-        tabLayout.addTab(fiveTab);
-        TabLayout.Tab sixTab=tabLayout.newTab();
-        sixTab.setText(projects[5]);
-        tabLayout.addTab(sixTab);
-        TabLayout.Tab sevenTab=tabLayout.newTab();
-        sevenTab.setText(projects[6]);
-        tabLayout.addTab(sevenTab);
-        TabLayout.Tab eightTab=tabLayout.newTab();
-        eightTab.setText(projects[7]);
-        tabLayout.addTab(eightTab);
-        TabLayout.Tab nineTab=tabLayout.newTab();
-        nineTab.setText(projects[8]);
-        tabLayout.addTab(nineTab);
-        TabLayout.Tab tenTab=tabLayout.newTab();
-        tenTab.setText(projects[9]);
-        tabLayout.addTab(tenTab);
-        TabLayout.Tab elevenTab=tabLayout.newTab();
-        elevenTab.setText(projects[10]);
-        tabLayout.addTab(elevenTab);
-        TabLayout.Tab twelveTab=tabLayout.newTab();
-        twelveTab.setText(projects[11]);
-        tabLayout.addTab(twelveTab);
-        TabLayout.Tab thirteenTab=tabLayout.newTab();
-        thirteenTab.setText(projects[12]);
-        tabLayout.addTab(thirteenTab);
-
-        PagerAdapter adapter= new PagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
-        simpleViewPager.setAdapter(adapter);
-        simpleViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
+        mCallApiButton = (Button) findViewById(R.id.api_button);
+        mOutputText = (TextView) findViewById(R.id.textview);
         mCallApiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +84,6 @@ public class data_retrive extends AppCompatActivity implements EasyPermissions.P
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
     }
-
     private void getResultsFromApi() {
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
@@ -142,7 +95,6 @@ public class data_retrive extends AppCompatActivity implements EasyPermissions.P
             new MakeRequestTask(mCredential).execute();
         }
     }
-
     @AfterPermissionGranted(REQUEST_PERMISSION_GET_ACCOUNTS)
     private void chooseAccount() {
         if (EasyPermissions.hasPermissions(
@@ -259,10 +211,16 @@ public class data_retrive extends AppCompatActivity implements EasyPermissions.P
                 REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
     }
-    public class getdata{
+    public static class getdata
+    {
         public List<String> date=new ArrayList<String>();
         public List<String> engineer=new ArrayList<String>();
 
+    }
+    public static List<String > mydata(){
+        getdata f=new getdata();
+        List<String> date=f.date;
+        return date;
     }
 
     @SuppressLint("StaticFieldLeak")
