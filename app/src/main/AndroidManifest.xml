@@ -15,9 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".project_board"></activity>
+        <activity android:name=".project_6"></activity>
+        <activity android:name=".project_5" />
+        <activity android:name=".project_4" />
+        <activity android:name=".project_3" />
+        <activity android:name=".project_2" />
+        <activity android:name=".project_board" />
         <activity android:name=".project_1" />
-        <activity android:name=".data_retrive" />
         <activity android:name=".Forget_password" />
         <activity android:name=".submit" />
         <activity android:name=".data_post" />
