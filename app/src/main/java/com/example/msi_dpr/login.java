@@ -122,7 +122,6 @@ public class login extends AppCompatActivity {
                                                     dialog.dismiss();
                                                 }
                                             }
-
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
