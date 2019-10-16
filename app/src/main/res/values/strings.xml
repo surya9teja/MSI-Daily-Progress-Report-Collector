@@ -1,10 +1,9 @@
 <resources>
-    <string name="app_name">MSI-DPR</string>
+    <string name="app_name">MSI-DPR
+    </string>
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
-
     </style>
-
     <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -12,9 +11,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
     <string name="title_activity_pgcil721">pgcil721</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

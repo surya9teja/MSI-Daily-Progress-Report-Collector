@@ -18,6 +18,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    buildToolsVersion = '28.0.3'
 }
 
 dependencies {
@@ -41,6 +47,7 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
     implementation 'pub.devrel:easypermissions:0.3.0'
+    implementation 'com.github.MdFarhanRaja:SearchableSpinner:2.0'
     implementation('com.google.api-client:google-api-client-android:1.25.0') {
         exclude group: 'org.apache.httpcomponents'
     }

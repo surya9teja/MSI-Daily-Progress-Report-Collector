@@ -1,6 +1,7 @@
 package com.example.msi_dpr;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -39,6 +41,11 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -50,6 +57,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,15 +83,41 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private static final int ALL_PERMISSIONS_RESULT = 1011;
 
     ProgressDialog dialog;
-    TextView txtDate, txtIssueTime, txtReturnTime, project_manager,locationTv;
-    Spinner spinner;
+    DatabaseReference projectListdb, managerListdb, channel_partner_listdb, line_namesdb;
+    TextView txtDate, txtIssueTime, txtReturnTime,locationTv;
+
+    CheckBox work_yes,work_no;
+
+    Spinner project_spinner; //project list spinner
+    ArrayList<String> projects;
+    ValueEventListener project_listener;
+    ArrayAdapter<String> project_adapter;
+
+    Spinner manager_spinner;
+    ArrayList<String> managers;
+    ValueEventListener manager_listener;
+    ArrayAdapter<String> manager_adapter;
+
+    TextView lines_spinner;
+    SpinnerDialog spinnerDialog;
+    ArrayList<String> line_name;
+    ValueEventListener lines_listener;
+    ArrayAdapter<String> line_adapter;
+
+    Spinner channel_partner_spinner;
+    ValueEventListener channel_partner_listner;
+    ArrayAdapter<String> channel_partner_adapter;
+    ArrayList<String> channel_partner;
+
+
     Button submit,signout;
     Geocoder geocoder;
     DatePickerDialog datePickerDialog;
-    EditText site_engineer, channel_partner, line_name, line_length, route_length, drum_number, location_number, today_work, plan_tomorrow, ehs, remarks, total_completed, drum_length;
-    String managers[] = new String[]{"Rajendra A", "Rajendra A", "Venkateswara", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Devendra", "Shyama", "Venkateswara", "Rajendra A"};
-    String project[] = new String[]{"AP- 1132 & 636km", "AP- 242km", "BSPTCL", "GETCO- 2226", "GETCO- 2274 P1", "GETCO- 2274 P2", "GETCO- 2275", "GETCO- 2276", "GETCO- 2278", "PGCIL-1851km", "PGCIL-721km", "PTCUL", "TS-216km"};
+    EditText site_engineer, line_length, route_length, drum_number, location_number, today_work, plan_tomorrow, ehs, remarks, total_completed, drum_length;
+    //String managers[] = new String[]{"Rajendra A", "Rajendra A", "Saurav Anand", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Sankar G", "Devendra", "Shyama", "Venkateswara", "Rajendra A"};
+   // String project[] = new String[]{"AP- 1132 & 636km", "AP- 242km", "BSPTCL", "GETCO- 2226", "GETCO- 2274 P1", "GETCO- 2274 P2", "GETCO- 2275", "GETCO- 2276", "GETCO- 2278", "PGCIL-1851km", "PGCIL-721km", "PTCUL", "TS-216km"};
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,10 +132,8 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         txtDate = (TextView) findViewById(R.id.in_date);
         txtIssueTime = (TextView) findViewById(R.id.in_ptw_issue_time);
         txtReturnTime = (TextView) findViewById(R.id.in_ptw_return_time);
-        project_manager = (TextView) findViewById(R.id.in_project_manager);
         site_engineer = (EditText) findViewById(R.id.in_site_engineer);
-        channel_partner = (EditText) findViewById(R.id.in_channel_partner);
-        line_name = (EditText) findViewById(R.id.in_line_name);
+        channel_partner_spinner = findViewById(R.id.channel_partner);
         line_length = (EditText) findViewById(R.id.in_line_length);
         route_length = (EditText) findViewById(R.id.in_route_length);
         drum_number = (EditText) findViewById(R.id.in_drum_number);
@@ -108,15 +141,24 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         today_work = (EditText) findViewById(R.id.in_today_work);
         plan_tomorrow = (EditText) findViewById(R.id.in_plan_tomorrow);
         ehs = (EditText) findViewById(R.id.in_ehs);
+        lines_spinner=(TextView) findViewById(R.id.search_line);
         remarks = (EditText) findViewById(R.id.in_remarks);
         submit = (Button) findViewById(R.id.btn_submit);
         total_completed = (EditText) findViewById(R.id.in_total_completed);
         drum_length = (EditText) findViewById(R.id.in_drum_length);
-        spinner = (Spinner) findViewById(R.id.project_list);
+        project_spinner = (Spinner) findViewById(R.id.project_list);
+        manager_spinner=(Spinner)findViewById(R.id.in_project_manger);
         locationTv=(TextView) findViewById(R.id.locationTv);
         signout=(Button) findViewById(R.id.btn_signout);
+        work_yes=(CheckBox)findViewById(R.id.work_yes);
+        work_no=(CheckBox)findViewById(R.id.work_no);
         dialog=new ProgressDialog(data_post.this);
         dialog.setMessage("Submitting...please wait");
+
+
+        projectListdb= FirebaseDatabase.getInstance().getReference("projects");
+
+
         ActivityCompat.requestPermissions(data_post.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},123);
         geocoder=new Geocoder(this, Locale.getDefault());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -125,6 +167,30 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                         new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
             }
         }
+        work_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(work_yes.isChecked()){
+                    work_no.setChecked(false);
+                    txtIssueTime.setText("");
+                    txtReturnTime.setText("");
+                    txtReturnTime.setEnabled(true);
+                    txtIssueTime.setEnabled(true);
+                }
+            }
+        });
+        work_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(work_no.isChecked()){
+                    work_yes.setChecked(false);
+                    txtIssueTime.setText("N/A");
+                    txtReturnTime.setText("N/A");
+                    txtReturnTime.setEnabled(false);
+                    txtIssueTime.setEnabled(false);
+                }
+            }
+        });
         // we build google api client
         googleApiClient = new GoogleApiClient.Builder(this).
                 addApi(LocationServices.API).
@@ -225,14 +291,50 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
             }
         });
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, project);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+       projects=new ArrayList<>();
+       project_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, projects);
+       project_spinner.setAdapter(project_adapter);
+       retrive_projects();
+        project_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        project_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Notify the selected item text
-                project_manager.setText(managers[position]);
+
+
+                String project_select=project_spinner.getSelectedItem().toString().trim();
+                channel_partner_listdb=FirebaseDatabase.getInstance().getReference(project_select).child("channel_partner");
+                channel_partner=new ArrayList<>();
+                channel_partner_adapter=new ArrayAdapter<String>(data_post.this,android.R.layout.simple_dropdown_item_1line,channel_partner);
+                channel_partner_spinner.setAdapter(channel_partner_adapter);
+                retrive_channel();
+                channel_partner_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                managerListdb=FirebaseDatabase.getInstance().getReference(project_select).child("projectManager");
+                managers=new ArrayList<>();
+                manager_adapter=new ArrayAdapter<String>(data_post.this,android.R.layout.simple_dropdown_item_1line,managers);
+                manager_spinner.setAdapter(manager_adapter);
+                retrive_managers();
+                manager_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                line_namesdb=FirebaseDatabase.getInstance().getReference(project_select).child("Line_name");
+                line_name=new ArrayList<>();
+                retrive_lines();
+                spinnerDialog=new SpinnerDialog(data_post.this,line_name,"Select or Search line",R.style.DialogAnimations_SmileWindow,"Close");
+                spinnerDialog.setCancellable(true); // for cancellable
+                spinnerDialog.setShowKeyboard(false);// for open keyboard by default
+                spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
+                    @Override
+                    public void onClick(String item, int position) {
+                        //Toast.makeText(data_post.this, item + "  " + position+"", Toast.LENGTH_SHORT).show();
+                        lines_spinner.setText(" "+item);
+                    }
+                });
+                lines_spinner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        spinnerDialog.showSpinerDialog();
+                    }
+                });
+
             }
 
             @Override
@@ -252,12 +354,12 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Project_Name = spinner.getSelectedItem().toString().trim();
+                String Project_Name = project_spinner.getSelectedItem().toString().trim();
                 String Date = txtDate.getText().toString().trim();
-                String Project_Manager = project_manager.getText().toString().trim();
+                String Project_Manager = manager_spinner.getSelectedItem().toString().trim();
                 String Site_Engineer = site_engineer.getText().toString().trim();
-                String Channel_partner = channel_partner.getText().toString().trim();
-                String Line_Name = line_name.getText().toString().trim();
+                String Channel_partner = channel_partner_spinner.getSelectedItem().toString().trim();
+                String Line_Name = lines_spinner.getText().toString().trim();
                 String Line_Length = line_length.getText().toString().trim();
                 String Route_Length = route_length.getText().toString().trim();
                 String Total_Completed=total_completed.getText().toString().trim();
@@ -303,6 +405,78 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                 {
                     Toast.makeText(data_post.this,"Please enter all the fields",Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    private void retrive_lines() {
+        lines_listener=line_namesdb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                line_name.clear();
+                lines_spinner.setText(" ");
+                for (DataSnapshot item:dataSnapshot.getChildren()){
+                    line_name.add(item.getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void retrive_channel() {
+        channel_partner_listner=channel_partner_listdb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                channel_partner.clear();
+                for(DataSnapshot item:dataSnapshot.getChildren()){
+                   channel_partner.add(item.getValue().toString());
+                }
+                channel_partner_adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void retrive_managers() {
+        manager_listener=managerListdb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                managers.clear();
+                for(DataSnapshot item:dataSnapshot.getChildren()){
+                    managers.add(item.getValue().toString());
+                }
+                manager_adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void retrive_projects(){
+        project_listener=projectListdb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                projects.clear();
+                for(DataSnapshot item:dataSnapshot.getChildren()){
+                    projects.add(item.getValue().toString());
+                }
+                project_adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
@@ -381,9 +555,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
             txtIssueTime.setText("");
             txtReturnTime.setText("");
             site_engineer.getText().clear();
-            channel_partner.getText().clear();
             line_length.getText().clear();
-            line_name.getText().clear();
             route_length.getText().clear();
             total_completed.getText().clear();
             drum_number.getText().clear();

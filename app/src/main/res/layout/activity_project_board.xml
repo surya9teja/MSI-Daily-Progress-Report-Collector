@@ -42,7 +42,6 @@
                         android:background="?android:selectableItemBackgroundBorderless"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:src="@drawable/ap"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside" />
                     <TextView
@@ -59,7 +58,6 @@
                         android:background="?android:selectableItemBackgroundBorderless"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
-                        android:src="@drawable/bsptl"
                         android:layout_marginTop="10dp"
                         android:layout_width="150dp"
                         android:layout_height="150dp" />
@@ -78,7 +76,6 @@
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/ts_transco"
                         android:layout_width="150dp"
                         android:layout_height="150dp" />
                     <TextView
@@ -103,7 +100,6 @@
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/getco"
                         android:layout_width="150dp"
                         android:layout_height="150dp" />
                     <TextView
@@ -121,7 +117,6 @@
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/pgcil"
                         android:layout_width="150dp"
                         android:layout_height="150dp" />
                     <TextView
@@ -139,7 +134,6 @@
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/ptcul"
                         android:layout_width="150dp"
                         android:layout_height="150dp" />
                     <TextView
