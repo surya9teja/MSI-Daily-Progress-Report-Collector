@@ -32,8 +32,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.github.javiersantos.appupdater.AppUpdater;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -46,6 +44,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -63,6 +65,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class data_post extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
 GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -122,9 +126,11 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_post);
+        Gson gson=new Gson();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://docs.google.com/forms/d/")
-                .build();
+                .baseUrl("https://forms.office.com/formapi/api/99796e3e-0445-4e05-839d-bd85abe5149a/users/04889d69-6ca1-4ce5-9d49-e1ae1f9541d5/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson)).build();
         final postdata post = retrofit.create(postdata.class);
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
@@ -154,7 +160,6 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         work_no=(CheckBox)findViewById(R.id.work_no);
         dialog=new ProgressDialog(data_post.this);
         dialog.setMessage("Submitting...please wait");
-
 
         projectListdb= FirebaseDatabase.getInstance().getReference("projects");
 
@@ -388,9 +393,61 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                     }
                     else
                         {
-                            Call<Void> completeQuestionnaireCall = post.completeQuestionnaire(Project_Name, Date, Project_Manager, Site_Engineer, Channel_partner
-                                    , Line_Name, Line_Length, Route_Length, Total_Completed, Drum_Number, Drum_Length, Location_Number, PTW_Issue_Time, PTW_Return_Time, Work_Today, Plan_Tomorrow, EHS, Remarks, l);
-                            completeQuestionnaireCall.enqueue(callCallback);
+                            Answers ans_proejct_name=new Answers("r1319b5c7873d4b2bb90608dfc88c1b59", Project_Name);
+                            Answers ans_date=new Answers("rd33544be0e0b4e4ca615b1602ebf4a4c",Date);
+                            Answers ans_project_manager=new Answers("rb44d7194c627478f8ec5f8777b2911ff",Project_Manager);
+                            Answers ans_site_engineer=new Answers("r480d33206caf4629aed57f7e90546d82",Site_Engineer);
+                            Answers ans_channel_partner=new Answers("r27571dceb5cf4a709c279adb1eda8a6f",Channel_partner);
+                            Answers ans_line_name=new Answers("rdccb3e96046f4366b2b88d68504140d1", Line_Name);
+                            Answers ans_line_length = new Answers("r991a65e4859542739aa1719090da2782", Line_Length);
+                            Answers ans_route_length=new Answers("ra000904979064bfe883d9f357f32f3e2",Route_Length);
+                            Answers ans_total_completed=new Answers("r65657a8fe3b54d5da68d39156bdf21e8",Total_Completed);
+                            Answers ans_drum_number=new Answers("r095a2ce93cae4ab88723505802403fb6",Drum_Number);
+                            Answers ans_drum_length=new Answers("r38665b3c06044960bb41c254c3110bf7",Drum_Length);
+                            Answers ans_location_number=new Answers("r546802b5563d4bda8be398b64153031b",Location_Number);
+                            Answers ans_ptw_issue=new Answers("r8b854d8e800f405891b1517f8a809abb", PTW_Issue_Time);
+                            Answers ans_ptw_retrun=new Answers("r571cc70b45bc45309a99eff8145eafa1", PTW_Return_Time);
+                            Answers ans_gps_location=new Answers("r146f2b1df5bf4cad9e1a1bf52ddf0d90",l);
+                            Answers ans_Work=new Answers("r786472f075f94c9193573bcf653b829b",Work_Today);
+                            Answers ans_plan=new Answers("r64b1c98d0b1c4c2aba9519f6b69d0d0d",Plan_Tomorrow);
+                            Answers ans_ehs=new Answers("rab4d519187e44153942c3cf6a1aff1e0",EHS);
+                            Answers ans_remarks=new Answers("rcbc4f4bdb6604740ba88f241db73f6a4", Remarks);
+
+                            ArrayList answers_list=new ArrayList();
+
+                            answers_list.add(ans_proejct_name);
+                            answers_list.add(ans_date);
+                            answers_list.add(ans_project_manager);
+                            answers_list.add(ans_site_engineer);
+                            answers_list.add(ans_channel_partner);
+                            answers_list.add(ans_line_name);
+                            answers_list.add(ans_line_length);
+                            answers_list.add(ans_route_length);
+                            answers_list.add(ans_total_completed);
+                            answers_list.add(ans_drum_number);
+                            answers_list.add(ans_drum_length);
+                            answers_list.add(ans_location_number);
+                            answers_list.add(ans_ptw_issue);
+                            answers_list.add(ans_ptw_retrun);
+                            answers_list.add(ans_gps_location);
+                            answers_list.add(ans_Work);
+                            answers_list.add(ans_plan);
+                            answers_list.add(ans_ehs);
+                            answers_list.add(ans_remarks);
+
+                            Gson gson_convert=new Gson();
+                            String gson_con_str=gson_convert.toJson(answers_list);
+
+                            end_answer ans=new end_answer(gson_con_str);
+
+                            String finalend_string=gson_convert.toJson(ans);
+
+                            Log.d("sded",finalend_string);
+
+                            Call<Object> makecall=post.completeQuestionnaire(finalend_string);
+                            makecall.enqueue(callCallback);
+
+                            Log.d("xx", "callbcak----"+post);
                             dialog.show();
                             route_length.setError(null);
                             //route_length.setTextColor(Color.BLACK);
@@ -407,6 +464,22 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
                 }
             }
         });
+    }
+
+    public class Answers{
+        private String questionId;
+        private String answer1;
+        public Answers(String questionId, String answer1){
+            this.questionId=questionId;
+            this.answer1=answer1;
+        }
+
+    }
+    public class end_answer{
+        private String answers;
+        public end_answer(String answers){
+            this.answers=answers;
+        }
     }
 
     private void retrive_lines() {
@@ -546,10 +619,10 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         return true;
     }
 
-    private final Callback<Void> callCallback = new Callback<Void>() {
+    private final Callback<Object> callCallback = new Callback<Object>() {
         @Override
-        public void onResponse(Call<Void> call, Response<Void> response) {
-            Log.d("XXX", "Submitted. " + response);
+        public void onResponse(Call<Object> call, Response<Object> response) {
+            Log.d("response", "Submitted. " + response);
             dialog.dismiss();
             txtDate.setText("");
             txtIssueTime.setText("");
@@ -572,7 +645,7 @@ GoogleApiClient.OnConnectionFailedListener, LocationListener {
         }
 
         @Override
-        public void onFailure(Call<Void> call, Throwable t) {
+        public void onFailure(Call<Object> call, Throwable t) {
             dialog.dismiss();
             Log.e("XXX", "Failed", t);
             Toast.makeText(data_post.this,"Failed to submit",Toast.LENGTH_SHORT).show();
